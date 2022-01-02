@@ -1,11 +1,14 @@
 // var playerName = 'Jeebis';
-var playerName = window.prompt("What is your robot's name?");
 var playerHealth = 100;
+var playerName = window.prompt("What is your robot's name?");
+  if (playerName === "Bernie Sanders") {
+    playerHealth = 500;
+  }
 var playerAttack = 10;
 var playerMoney = 10;
 
 
-var enemyNames = ["Bender", "Flexo", "The Robot Devil"];
+var enemyNames = ["Scruffy the Janitor", "Dr. Zoiberg", "Professor Farnsworth", "Phillip J. Fry", "Bender", "Flexo", "The Robot Devil"];
 var enemyHealth = 50;
 var enemyAttack = 12;
 
@@ -26,11 +29,11 @@ var fight = function(enemyName) {
 
   if (promptFight === "skip" || promptFight === "SKIP") {
     // confirm player wants to skip
-    var confirmSkip = window.confirm("Are you sure you'd like to quit?");
+    var confirmSkip = window.confirm("Are you sure you're a quitter?");
 
     // if yes (true), leave fight
     if (confirmSkip) {
-      window.alert(playerName + " has decided to skip this fight. Goodbye!");
+      window.alert(playerName + " chickened out!");
       // subtract money from playerMoney for skipping
       playerMoney = playerMoney - 10;
       console.log("playerMoney", playerMoney);
@@ -40,21 +43,21 @@ var fight = function(enemyName) {
     // remove enemy's health by subtracting the amount set in the playerAttack variable
     enemyHealth = enemyHealth - playerAttack;
     console.log(
-      playerName + " attacked " + enemyNames[i] + ". " + enemyNames[i] + " now has " + enemyHealth + " health remaining."
+      playerName + " attacked " + enemyName + ". " + enemyName + " now has " + enemyHealth + " health remaining."
     );
 
     // check enemy's health
     if (enemyHealth <= 0) {
-      window.alert(enemyNames[i] + " ate shit!");
+      window.alert(enemyName + " ate shit!");
       break;
     } else {
-      window.alert(enemyNames[i] + " still has " + enemyHealth + " health left.");
+      window.alert(enemyName + " still has " + enemyHealth + " health left.");
     }
 
     // remove players's health by subtracting the amount set in the enemyAttack variable
     playerHealth = playerHealth - enemyAttack;
     console.log(
-      enemyNames[i] + " attacked " + playerName + ". " + playerName + " now has " + playerHealth + " health remaining."
+      enemyName + " attacked " + playerName + ". " + playerName + " now has " + playerHealth + " health remaining."
     );
 
     // check player's health
@@ -69,36 +72,67 @@ var fight = function(enemyName) {
 
 };
 
-// run fight function to start game
-for(var i = 0; i < enemyNames.length; i++) {
-
-  if (playerHealth > 0) {
-    window.alert("Round " + (i +1));
-    var pickedEnemyName = enemyNames[i];
-    enemyHealth = 50;
-    fight(pickedEnemyName);
-  } else {
-    window.alert("Wasted.");
-    break;
+var startGame = function() {
+  //reset player stats
+  var playerHealth = 100;
+  if (playerName === "Bernie Sanders") {
+    playerHealth = 500;
   }
-  
+  var playerAttack = 10;
+  var playerMoney = 10; 
+  // run fight function to start game
+  for(var i = 0; i < enemyNames.length; i++) {
+    if (playerHealth > 0) {
+      window.alert("Round " + (i +1));
+      var pickedEnemyName = enemyNames[i];
+      enemyHealth = 50;
+      fight(pickedEnemyName);
+    } else {
+      window.alert("Wasted.");
+      break;
+   }
+  }
+  //after the loop ends, player is either out of health or enemies to fight
+  endGame();
+};
+
+var endGame = function() {
+  if (playerHealth > 0) {
+    window.alert((playerName) + " has survived the game, your score is:" + (playerHealth * i));
+  } 
+  else {
+    window.alert((playerName) + " has got dedded. D:")
+  }
+
+  var playAgainConfirm = window.confirm("would you like to play again?");
+
+  if (playAgainConfirm) {
+    //restart game
+    startGame();
+  } else {
+    window.alert("Quitter o;");
+  }
 }
 
+//start the game wht the page loads
+startGame();
 
 
-/* Starter Code References
-console.log(playerName);
+//Start Game logic function
+/* between fights shop() with upgrade attack and refill for health
+if refill, playerhealth =100, -playerMoney
+else if upgrade, update attack to XX, -playerMoney
+  if playerMoney <= 0 alert, insufficient funds
+else if leave to return to fight loop
+else shop()*/
 
-var name = "Burt";
-console.log(name);
 
-console.log("This logs a string, good for leaving yourself a message");
-// this will do math and log 20
-console.log(5*4);
-//Who dis?
-console.log("Our robot's name is " + playerName);
+//Endgame logic function
+/*Display stats in alert.window
+window.prompt play again?
+if yes restart o; */
 
-// robot is ready for battle
-console.log(playerName + " is ready for battle!");
-//robot has won
-//console.log("Your exquisite splecimine " + playerName + " has won");*/
+//post round
+/*after defeat of opponent or skip, call shop()
+*/
+
