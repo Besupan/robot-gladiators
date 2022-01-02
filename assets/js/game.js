@@ -36,7 +36,7 @@ var fight = function(enemyName) {
       window.alert(playerName + " chickened out!");
       // subtract money from playerMoney for skipping
       playerMoney = playerMoney - 10;
-      console.log("playerMoney", playerMoney);
+      console.log("gold = ", playerMoney);
       break;
     }
   } 
@@ -49,6 +49,9 @@ var fight = function(enemyName) {
     // check enemy's health
     if (enemyHealth <= 0) {
       window.alert(enemyName + " ate shit!");
+      //money for win
+      playerMoney = playerMoney + 20;
+
       break;
     } else {
       window.alert(enemyName + " still has " + enemyHealth + " health left.");
@@ -87,6 +90,13 @@ var startGame = function() {
       var pickedEnemyName = enemyNames[i];
       enemyHealth = 50;
       fight(pickedEnemyName);
+      //if wer're not at the last enemy in the array
+      if (playerHealth > 0 && i < enemyNames.length - 1) {
+        var storeConfirm = window.confirm("Visit store?");
+        if (storeConfirm) {
+          shop();
+        }
+      }
     } else {
       window.alert("Wasted.");
       break;
@@ -98,9 +108,8 @@ var startGame = function() {
 
 var endGame = function() {
   if (playerHealth > 0) {
-    window.alert((playerName) + " has survived the game, your score is:" + (playerHealth * i));
-  } 
-  else {
+    window.alert((playerName) + " has survived the game, your score is: " + (playerHealth * i));
+  } else {
     window.alert((playerName) + " has got dedded. D:")
   }
 
@@ -113,6 +122,57 @@ var endGame = function() {
     window.alert("Quitter o;");
   }
 }
+
+//shop function
+var shop = function() {
+  var shopOptionPrompt = window.prompt(
+    "Would you like ot refill your health [REFILL], upgrade your attack [UPGRADE], or leave the store [LEAVE]?"
+  );
+
+  //use switch to carry out action
+  switch (shopOptionPrompt) {
+    case "REFILL":
+    case "refill":
+    case "Refill":
+      if(playerMoney >= 7) {
+        window.alert("refilling " + (playerName) + "'s health by 20 for 7 gold.");
+
+        //increase health and decrease money
+        playerHealth = playerHealth + 20;
+        playerMoney = playerMoney -7;
+        
+      } else {
+        window.alert("Need mo money.");
+      }
+      break;
+    case "UPGRADE":
+    case "upgrade":
+    case "Upgrade":
+      if(playerMoney >= 7) {
+        window.alert("Upgrading " + (playerName) + "'s attack by 6 for 7 gold");
+
+        //increase attack and decrease money
+        playerAttack = playerAttack + 6;
+        playerMoney = playerMoney - 7;
+      } else {
+        window.alert("need mo money");
+      }
+      break;
+    case "LEAVE":
+    case "leave":
+    case "Leave":
+      window.alert("leaving the store.");
+
+      //do nothing, so function will end
+      break;
+    default:
+      window.alert(" you did not pick a valid option. Think again.");
+
+      //call shop function again
+      shop();
+      break;
+  }
+};
 
 //start the game wht the page loads
 startGame();
