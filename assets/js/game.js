@@ -198,6 +198,21 @@ var endGame = function() {
     window.alert((playerInfo.name) + " has got dedded. D:")
   }
 
+  var highScore = localStorage.getItem("highscore");
+  if (highScore === null) {
+    highScore = 0;
+  }
+  if (playerInfo.money > highScore) {
+    localStorage.setitem("highscore", playerInfo.money);
+    localStorage.setitem("name", playerInfo.name);
+
+    alert(playerInfo.name + "now has the high score of" + playerInfo.money + "!");
+  }
+  else {
+    alert("You did not beat the high score.");
+  }
+  
+
   var playAgainConfirm = window.confirm("would you like to play again?");
 
   if (playAgainConfirm) {
