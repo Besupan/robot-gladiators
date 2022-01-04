@@ -4,9 +4,20 @@ var randomNumber = function(min, max) {
   return value;
 }
 
+var getPlayerName = function() {
+  var name = "";
+
+  while (name === "" || name === null) {
+    name = prompt("What is your robot's name?");
+  }
+
+  console.log("Your roboit's name is " + name);
+  return name
+};
+
 var playerInfo = {
   health : 100,
-  name: window.prompt("What is your robot's name?"),
+  name: getPlayerName(),
   attack : 10,
   money : 10,
   reset: function() {
@@ -144,8 +155,8 @@ var startGame = function() {
 
   // run fight function to start game
   for(var i = 0; i < enemyInfo.length; i++) {
-    if (playerInfo.health > 0) {
-      window.alert("Round " + (i +1));
+    if (playerInfo.health > 0) { 
+      window.alert("Round " + (i +1)); 
       var pickedEnemyObj = enemyInfo[i];
       enemyInfo.health = randomNumber(40, 60);
       fight(pickedEnemyObj);
@@ -178,7 +189,7 @@ var endGame = function() {
     //restart game
     startGame();
   } else {
-    window.alert("Quitter o;");
+    window.alert("Bite my shiny metal ass");
   }
 }
 
